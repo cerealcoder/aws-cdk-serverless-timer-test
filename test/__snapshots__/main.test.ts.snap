@@ -1,0 +1,858 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "testTimerServicetestTimerServiceRestapiEndpoint98B5E19A": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "testTimerServicetestTimerServiceRestapiDeploymentStageprod398A09C0",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Resources": Object {
+    "testTimerServiceApiLambdaFunction0ED53AB6": Object {
+      "DependsOn": Array [
+        "testTimerServiceApiLambdaFunctionServiceRole84EDE9DF",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+'use strict';
+const util = require('util');
+console.log('Loading function');
+exports.handler = async (event) => {
+    const response = {
+        statusCode: 200,
+        headers: {
+            \\"Access-Control-Allow-Headers\\" : \\"Content-Type\\",
+            \\"Access-Control-Allow-Origin\\": \\"*\\",
+            \\"Access-Control-Allow-Methods\\": \\"OPTIONS,PUT,GET,DELETE\\"
+        },
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
+}
+",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunctionServiceRole84EDE9DF",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "testTimerServiceApiLambdaFunctionServiceRole84EDE9DF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "testTimerServiceLambdaFunction42F5168E": Object {
+      "DependsOn": Array [
+        "testTimerServiceLambdaFunctionServiceRoleDefaultPolicy143CD355",
+        "testTimerServiceLambdaFunctionServiceRole2EF3193C",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+'use strict';
+const util = require('util');
+console.log('Loading function');
+exports.handler = async (event) => {
+  console.log(util.inspect(event, false, 5));
+  return true;
+}
+",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceLambdaFunctionServiceRole2EF3193C",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "testTimerServiceLambdaFunctionServiceRole2EF3193C": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "testTimerServiceLambdaFunctionServiceRoleDefaultPolicy143CD355": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "testTimerServicetestTimerServiceTable865656B9",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "testTimerServiceLambdaFunctionServiceRoleDefaultPolicy143CD355",
+        "Roles": Array [
+          Object {
+            "Ref": "testTimerServiceLambdaFunctionServiceRole2EF3193C",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "testTimerServiceLambdaFunctiontestTimerServiceLambdaInvokePermissionACA907D9": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceLambdaFunction42F5168E",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServicetestTimerServiceEventsRule56ECB4D1",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceEventsRule56ECB4D1": Object {
+      "Properties": Object {
+        "ScheduleExpression": "rate(1 minute)",
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Fn::GetAtt": Array [
+                "testTimerServiceLambdaFunction42F5168E",
+                "Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "testTimerServicetestTimerServiceQueueE2D4E2DF": Object {
+      "Properties": Object {
+        "ContentBasedDeduplication": true,
+        "FifoQueue": true,
+        "QueueName": "testTimerServiceQueue.fifo",
+      },
+      "Type": "AWS::SQS::Queue",
+    },
+    "testTimerServicetestTimerServiceRestapi83216723": Object {
+      "Properties": Object {
+        "Name": "testTimerServiceRestapi",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "testTimerServicetestTimerServiceRestapiAccount0D6F24E2": Object {
+      "DependsOn": Array [
+        "testTimerServicetestTimerServiceRestapi83216723",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServicetestTimerServiceRestapiCloudWatchRoleE927DFA1",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "testTimerServicetestTimerServiceRestapiCloudWatchRoleE927DFA1": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "testTimerServicetestTimerServiceRestapiDeployment5F47639D3bf6d7557571c1d247fdd8909d18b3bc": Object {
+      "DependsOn": Array [
+        "testTimerServicetestTimerServiceRestapiperiodicidDELETE648AB030",
+        "testTimerServicetestTimerServiceRestapiperiodicidGETB272BA09",
+        "testTimerServicetestTimerServiceRestapiperiodicidOPTIONSDBD1DF10",
+        "testTimerServicetestTimerServiceRestapiperiodicidPUTA456619A",
+        "testTimerServicetestTimerServiceRestapiperiodicid62784E28",
+        "testTimerServicetestTimerServiceRestapiperiodicC7E98E9C",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "testTimerServicetestTimerServiceRestapiDeploymentStageprod398A09C0": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapiDeployment5F47639D3bf6d7557571c1d247fdd8909d18b3bc",
+        },
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicC7E98E9C": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServicetestTimerServiceRestapi83216723",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "periodic",
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicid62784E28": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapiperiodicC7E98E9C",
+        },
+        "PathPart": "{id}",
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidDELETE648AB030": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "DELETE",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "testTimerServiceApiLambdaFunction0ED53AB6",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapiperiodicid62784E28",
+        },
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidDELETEApiPermissionTesttesttestTimerServicetestTimerServiceRestapiBF47F3BADELETEperiodicid33B48F4B": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/test-invoke-stage/DELETE/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidDELETEApiPermissiontesttestTimerServicetestTimerServiceRestapiBF47F3BADELETEperiodicidEC81D5BE": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapiDeploymentStageprod398A09C0",
+              },
+              "/DELETE/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidGETApiPermissionTesttesttestTimerServicetestTimerServiceRestapiBF47F3BAGETperiodicid00924D76": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/test-invoke-stage/GET/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidGETApiPermissiontesttestTimerServicetestTimerServiceRestapiBF47F3BAGETperiodicid16E4BEBD": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapiDeploymentStageprod398A09C0",
+              },
+              "/GET/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidGETB272BA09": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "testTimerServiceApiLambdaFunction0ED53AB6",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapiperiodicid62784E28",
+        },
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidOPTIONSApiPermissionTesttesttestTimerServicetestTimerServiceRestapiBF47F3BAOPTIONSperiodicid1AD5CF1B": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/test-invoke-stage/OPTIONS/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidOPTIONSApiPermissiontesttestTimerServicetestTimerServiceRestapiBF47F3BAOPTIONSperiodicidA4834103": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapiDeploymentStageprod398A09C0",
+              },
+              "/OPTIONS/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidOPTIONSDBD1DF10": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "testTimerServiceApiLambdaFunction0ED53AB6",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapiperiodicid62784E28",
+        },
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidPUTA456619A": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "PUT",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "testTimerServiceApiLambdaFunction0ED53AB6",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapiperiodicid62784E28",
+        },
+        "RestApiId": Object {
+          "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidPUTApiPermissionTesttesttestTimerServicetestTimerServiceRestapiBF47F3BAPUTperiodicid695BBD8C": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/test-invoke-stage/PUT/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceRestapiperiodicidPUTApiPermissiontesttestTimerServicetestTimerServiceRestapiBF47F3BAPUTperiodicidDCF70272": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "testTimerServiceApiLambdaFunction0ED53AB6",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapi83216723",
+              },
+              "/",
+              Object {
+                "Ref": "testTimerServicetestTimerServiceRestapiDeploymentStageprod398A09C0",
+              },
+              "/PUT/periodic/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testTimerServicetestTimerServiceTable865656B9": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "AttributeDefinitions": Array [
+          Object {
+            "AttributeName": "shardId",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "timeShardId",
+            "AttributeType": "S",
+          },
+        ],
+        "KeySchema": Array [
+          Object {
+            "AttributeName": "shardId",
+            "KeyType": "HASH",
+          },
+          Object {
+            "AttributeName": "timeShardId",
+            "KeyType": "RANGE",
+          },
+        ],
+        "ProvisionedThroughput": Object {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5,
+        },
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Retain",
+    },
+  },
+}
+`;
