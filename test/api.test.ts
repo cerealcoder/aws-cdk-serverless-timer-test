@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import '@aws-cdk/assert/jest';
 import { AwsCdkExec } from 'aws-cdk-exec';
 // @ts-ignore
