@@ -17,7 +17,6 @@ test('deploy, test api, and destroy', async () => {
 
   const stackName = 'timer-test-stack';
   const apiStackResult = await cdkApp.deploy(stackName);
-
   console.log(util.inspect(apiStackResult, false, 8));
 
   const cloudformation = new AWS.CloudFormation();
@@ -46,15 +45,42 @@ test('deploy, test api, and destroy', async () => {
   });
 
   const id = uuid.v4();
+  const startTime = Date.now();
   let resp;
   const subUrl = '/periodic/' + id;
-  resp = await req.put(subUrl, '{ "key": "foo", "value": "value" }');
-  console.log('---put' + util.inspect(resp, false, 4));
-  resp = await req.get(subUrl);
-  console.log('---get' + util.inspect(resp, false, 4));
-  resp = await req.delete(subUrl);
-  console.log('---delete' + util.inspect(resp, false, 4));
+  const timerCallbackData = { timerCallbackData: { id: id, startTime: startTime } };
+  resp = await req.put(subUrl, JSON.stringify(timerCallbackData) );
+  //console.log('---put' + util.inspect(resp.data, false, 4));
+  expect(resp.data).toHaveProperty('id');
+  expect(resp.data).toHaveProperty('shardId');
+  expect(resp.data).toHaveProperty('timeShardId');
+  expect(resp.data).toHaveProperty('timerCallbackData');
 
+  resp = await req.get(subUrl);
+  //console.log('---get' + util.inspect(resp.data, false, 4));
+  expect(resp.data).toHaveProperty('id');
+  expect(resp.data).toHaveProperty('shardId');
+  expect(resp.data).toHaveProperty('timeShardId');
+  expect(resp.data).toHaveProperty('timerCallbackData');
+  expect(resp.data.timerCallbackData).toHaveProperty('id');
+  expect(resp.data.timerCallbackData).toHaveProperty('startTime');
+  expect(resp.data.id).toEqual(id);
+  expect(resp.data.timerCallbackData.id).toEqual(id);
+  expect(resp.data.timerCallbackData.startTime).toEqual(startTime);
+
+
+  resp = await req.delete(subUrl);
+  //console.log('---delete' + util.inspect(resp.data, false, 4));
+  expect(resp.data).toEqual(id);
+
+  // ensure deltion
+  try {
+    resp = await req.get(subUrl);
+    expect(false).toBeTruthy(); // should never get here
+  } catch (err) {
+    console.log('---get2' + util.inspect(err.response, false, 4));
+    expect(err.response.status).toEqual(404);
+  }
 
   //const destroyResult = await cdkApp.destroy(stackName);
   //console.log(util.inspect(destroyResult, false, 8));
